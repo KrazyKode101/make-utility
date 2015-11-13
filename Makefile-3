@@ -1,0 +1,41 @@
+CC = g++
+OPTIONS = -O2 -g -Wall
+LDFLAGS = 
+INCLUDES = -I .
+.PHONY = all clean
+
+OS = $(shell uname)
+CPP_SOURCES = main.cpp hello.cpp factorial.cpp
+
+ifeq ($(OS),Linux)
+	SUBDIRS = simple
+else ifeq($(OS),qnx)
+	SUBDIRS = simple
+else
+	@echo "no subdirs to compile"
+	SUBDIRS = 
+endif
+
+EXECUTABLE = hello
+
+OBJS = $(CPP_SOURCES:.cpp=.o) 
+
+all : subdirs $(EXECUTABLE)
+
+subdirs : 
+	-$(foreach subdir,$(SUBDIRS),cd $(subdir) && $(MAKE)) 
+	
+$(EXECUTABLE) : $(OBJS)
+	@echo "Building ... " $(shell pwd) " ..."
+	$(CC) $(OPTIONS) $(LDFLAGS) $(INCLUDES) $(OBJS) -o $@
+
+%.o : %.cpp
+	$(CC) $(OPTIONS) $(INCLUDES) -c $*.cpp
+
+list : 
+	@echo $(shell ls)
+
+clean:
+	@echo "Cleaning up"	
+	-rm -rf *.o
+	-rm $(EXECUTABLE)
