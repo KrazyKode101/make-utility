@@ -1,0 +1,18 @@
+CC = g++
+OPTIONS = -O2 -g -Wall -ansi -Werror 
+INCLUDES += -I/home/$(USER)/headers/ -I.
+
+PROJECT_ROOT = /home/$(USER)/learn_make
+
+DUMPDIR = $(PROJECT_ROOT)/dumps
+SRCDIR = $(PROJECT_ROOT)/src/
+
+PATHFROMSRC = $(subst $(SRCDIR),,$(CURDIR))
+
+OBJDIR = $(DUMPDIR)/$(PATHFROMSRC)/objs
+LIBDIR = $(DUMPDIR)/$(PATHFROMSRC)/libs
+EXECDIR = $(DUMPDIR)/$(PATHFROMSRC)/exec
+
+LDFLAGS += -L$(LIBDIR)
+
+.PHONY = all clean

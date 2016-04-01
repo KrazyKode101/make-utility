@@ -1,0 +1,44 @@
+OBJS = $(subst .cpp,.o,$(CPP_SOURCES))
+OBJNAMES = $(patsubst %,$(OBJDIR)/%,$(OBJS))
+
+LIBTARGET =
+BINTARGET =
+
+ifneq ($(strip $(LIB)),)
+	LIBTARGET = $(LIBDIR)/lib$(LIB).a
+endif
+
+ifneq ($(strip $(BIN)),)
+	BINTARGET = $(EXECDIR)/$(subst .cpp,,$(BIN))
+endif
+
+all : subdirs $(LIBTARGET) $(BINTARGET)
+
+subdirs :
+	$(foreach subdir,$(SUBDIRS),cd $(subdir) && $(MAKE))
+
+$(BINTARGET) : $(LIBTARGET)
+	@echo "target: " $@ "dependencies: " $^
+	mkdir -p $(EXECDIR)
+	$(CC) $(OPTIONS) $(INCLUDES) $(LDFLAGS) $(BIN) -l$(LIB) -o $@
+
+$(LIBTARGET) : $(OBJNAMES)
+	@echo "target: " $@  "dependencies:" $^
+	mkdir -p $(LIBDIR)
+	ar rvs $@ $?
+
+.SECONDEXPANSION:
+%.o : $$(subst .o,.cpp,$$(notdir $$@))
+	@echo "target: " $@  "dependencies:" $^
+	mkdir -p $(OBJDIR)
+	$(CC) $(OPTIONS) $(INCLUDES) -c $^ -o $@
+
+list :
+	@echo $(shell ls)
+
+clean:
+	@echo "Cleaning up"
+	rm -f $(BINTARGET)
+	rm -f $(LIBTARGET)
+	$(foreach obj,$(OBJNAMES),rm -f $(obj))
+	$(foreach subdir,$(SUBDIRS),cd $(subdir) && $(MAKE) clean)
