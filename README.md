@@ -15,4 +15,14 @@ it sets up directories like below:
     - /src      #project code
 
 in every folder under src,
-copy makesetup/Makefile in to that folder and fill the empty vars
+copy makesetup/Makefile in to that folder and fill the below empty vars:
+CPP_SOURCES =
+SUBDIRS = 
+LIB =
+BIN =
+
+
+
+important sources to learn about make utility:
+http://opensourceforu.efytimes.com/2012/06/gnu-make-in-detail-for-beginners/
+http://mrbook.org/blog/tutorials/make/
