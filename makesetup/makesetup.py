@@ -2,10 +2,10 @@
 
 import sys,os,commands,shutil
 
-sw_loc = '/home/'+os.environ['USER']+'/makesetup/'
-swscripts_loc = sw_loc+'scripts'
+sw_loc = "/home/"+os.environ['USER']+"/makesetup/"
+swscripts_loc = sw_loc+"scripts"
 
-def setupproject(projectpath):
+def setup_project(projectpath):
     os.makedirs(projectpath)
     os.makedirs(projectpath+'/scripts')
     os.makedirs(projectpath+'/dumps')
@@ -17,12 +17,12 @@ def setupproject(projectpath):
 
 def main():
     args = sys.argv[1:]
-    if not args or not len(args)==1:
-        print "please enter a valid project path"
-        print "usage: mainsetup.py /projectpath"
+    if len(args)==2:
+        if args[0] == '--setup':
+            setup_project(args[1])
+    else:
+        print "usage: makesetup.py --setup [project_path]"
         sys.exit(1)
-
-    setupproject(args[0])
 
 if __name__ == "__main__":
 	main()

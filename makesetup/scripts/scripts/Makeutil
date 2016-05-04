@@ -35,12 +35,9 @@ $(LIBTARGET) : $(OBJNAMES)
 
 list :
 	@echo $(shell ls)
-	@echo $(OBJDIR)
-	@echo $(LIBDIR)
-	@echo $(EXECDIR)
-	@echo $(OBJNAMES)
-	@echo $(LIBTARGET)
-	@echo $(BINTARGET)
+	@echo $(PATHFROMSRC)
+	@echo $(CURDIR)
+	@echo $(SRCDIR)
 
 clean:
 	@echo "Cleaning up"
