@@ -5,7 +5,8 @@ put makesetup folder in any appropriate location as you wish say: /home/userx/ma
 usage:
 /home/userx/makesetup/makesetup.py [path-to-new-c++-project]
 ex:
-/home/userx/makesetup/makesetup.py /home/userx/proj1
+/home/userx/makesetup/makesetup.py --setup /home/userx/proj1
+/home/userx/makesetup/update/updateprojectroot.sh /home/userx/proj1
 
 it sets up directories like below:
 /home/userx/
